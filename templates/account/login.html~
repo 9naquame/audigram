@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+	{%block login %}
+	<hr>
+		<a href='/account/signup'><button>Sign Up</button></a>
+	<hr>
+		{% if logged_in %}
+			Already logged-in
+		{% else %}
+		<form action="." method="post">
+			{{ form.as_p }}
+			<input type="submit" name="Submit" />
+			<input type='reset' name='Reset'>
+		</form>
+		{% endif %}
+	<hr>
+	<a href='/blog/searchpage'><button>Search</button></a><br/>
+	{% endblock %}

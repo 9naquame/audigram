@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<link rel="stylesheet" type="text/css" href="/static/base.css" />
+<script language = "JavaScript" src = "/static/coverter.js"></script>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>audigram</title>
+</head>
+	
+<body style="background-color:white; font-family:calibri;"> <!-- background-image:url(/static/back.jpg) -->
+	<div id="wrapper">
+		</div id="header"><a href="/blog/">MY BLOG</a></div>
+	</div>
+	{% block content %}
+		{% for audi in audi_list %}
+			<h2><a href="/audi/detail/{{ audi.id }}/True">{{ audi.title }}</a></h2>
+			<ul>
+				<div>Created: {{ audi.created }}</div>
+				<div>Created: {{ audi.audio_file }}</div>
+			</ul>
+		{% endfor %}
+	{% endblock %}
+	
+</body>
+</html>
