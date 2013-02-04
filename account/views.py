@@ -3,7 +3,7 @@ from django import forms
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render_to_response
 from django.views.decorators.csrf import csrf_exempt
-from blog.models import Audi 
+from audi.models import Audi 
 from django.contrib.auth.decorators import login_required 
 from django.contrib.auth.models import User
 from django.contrib.auth.signals import user_logged_in, user_logged_out
@@ -38,10 +38,10 @@ def sign_up_view(request):
                         user.last_name = lname
                         name = fname + ' ' + lname
                         user.save()
-                        return render_to_response('base.html', {'blog_list':audi_list,'request_user':request.user.username,'full_name':name })
+                        return render_to_response('base.html', {'audi_list':audi_list,'request_user':request.user.username,'full_name':name })
         else:
                   form = SignUpForm()
-        return render_to_response('account/signup.html', {'form': form,'audi_list':blog_list})
+        return render_to_response('account/signup.html', {'form': form,'audi_list':audi_list})
 
 @csrf_exempt
 def loginView(request):               
@@ -59,11 +59,11 @@ def loginView(request):
                                         return HttpResponseRedirect("/audi/")
 	else:
                 form = LoginForm()
-	return render_to_response('account/login.html', {'form': form,'audi_list':audi_list,'logged_in':request.user.is_authenticated()})
+	return render_to_response('account/login.html', {'form': form,'audi_list':audi_list})#'logged_in':request.user.is_authenticated()})
 
     
 @csrf_exempt
 def logoutView(request):
         logout(request)
-        return render_to_response('account/logout.html',{'blog_list':Audi.objects.all()[:3]})
+        return render_to_response('account/logout.html',{'audi_list':Audi.objects.all()[:3]})
 
