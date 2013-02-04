@@ -8,6 +8,8 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'audigram.views.home', name='home'),
     # url(r'^audigram/', include('audigram.foo.urls')),
+    url(r'^audi/', include('audigram.audi.urlconfig')),
+    url(r'^account/', include('audigram.account.urlconfig')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
