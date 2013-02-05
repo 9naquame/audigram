@@ -8,10 +8,22 @@ from django.shortcuts import render_to_response
 from django import forms
 #from django.contrib.auth.decorators import login_required
 	
-# Create your views here.
-        
+class UploadAudioForm(forms.Form):
+    audio_file = forms.FileField()
+
+def clean_audio_file(request):
+	if request.method == 'POST':
+		form = UploadAudioForm()
+		if form.is_valid():
+			files = form.cleaned_data.get('audio_file',False)
+			return render_to_response('audi/try.html',{'form': form,'files': files})
+	
+	else:
+		form = UploadAudioForm()
+	return render_to_response('audi/try.html',{'form': form})
+
 def home(request):
-        audi_list = Audi.objects.all()[:3]
+	audi_list = Audi.objects.all()[:3]
 	return render_to_response('base.html', {'audi_list':audi_list,'request_user':request.user.username})
         if not request.user.is_authenticated():
                 return render_to_response('base.html', {'audi_list':audi_list,'request_user':request.user.username})
