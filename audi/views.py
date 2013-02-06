@@ -8,15 +8,24 @@ from django.shortcuts import render_to_response
 from django import forms
 #from django.contrib.auth.decorators import login_required
 	
-class UploadAudioForm(forms.Form):
-    audio_file = forms.FileField()
+class UploadAudioForm(ModelForm):
+	class Meta:
+		model = Audi	
+		exclude = ['title']
 
+@csrf_exempt
 def clean_audio_file(request):
 	if request.method == 'POST':
-		form = UploadAudioForm()
+		form = UploadAudioForm(request.POST)
+		#file = request.cleaned_data.get('title',False)
+		#return render_to_response('audi/try.html',{'form': form})
 		if form.is_valid():
-			files = form.cleaned_data.get('audio_file',False)
-			return render_to_response('audi/try.html',{'form': form,'files': files})
+			#files = request.cleaned_data.get('title',False)
+			return HttpResponse("grt")
+			
+		else:
+			#errors = form.get_validation_errors(data)
+			return HttpResponse("Error")
 	
 	else:
 		form = UploadAudioForm()
