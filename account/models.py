@@ -12,12 +12,12 @@ class UserProfile(models.Model):
     #profile_picture = models.ImageField(upload_to='thumbpath', blank=True)
     user = models.ForeignKey(User, unique=True)#user = models.OneToOneField(User)
     def __unicode__(self):
-        return self.user
+         return unicode(self.user)
 
 class UserProfileAdmin(admin.ModelAdmin):
-	list_display = ('updated',)
-	search_fields = ('updated',)
-	list_filter = ('updated',)
+	list_display = ('user','country','location')
+	search_fields = ('user','country')
+	list_filter = ('user','country','gender')
 	def __unicode__(self):
 		return self.list_display
 
