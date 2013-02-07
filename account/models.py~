@@ -9,13 +9,13 @@ class UserProfile(models.Model):
     country = CountryField(default='',max_length=3)
     location = models.CharField(max_length=140)
     gender = models.CharField(max_length=140)  
-    #profile_picture = models.ImageField(upload_to='thumbpath', blank=True)
-    user = models.ForeignKey(User, unique=True)#user = models.OneToOneField(User)
+    profile_picture = models.ImageField(upload_to='thumbpath', blank=True)
+    user = models.OneToOneField(User)#user = models.ForeignKey(User, unique=True)
     def __unicode__(self):
          return unicode(self.user)
 
 class UserProfileAdmin(admin.ModelAdmin):
-	list_display = ('user','country','location')
+	list_display = ('user','country','location','profile_picture')
 	search_fields = ('user','country')
 	list_filter = ('user','country','gender')
 	def __unicode__(self):
