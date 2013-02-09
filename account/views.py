@@ -67,6 +67,6 @@ def logoutView(request):
         logout(request)
         return render_to_response('account/logout.html',{'audi_list':Audi.objects.all()[:3]})
 
-def ProfileView(request):
+def profileView(request):
         return render_to_response('account/profile.html')
 
