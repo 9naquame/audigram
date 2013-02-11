@@ -117,6 +117,7 @@ TEMPLATE_DIRS = (
 INSTALLED_APPS = (
     'audi',
     'account',
+	'social',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

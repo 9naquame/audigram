@@ -10,7 +10,7 @@ class TwitterProfile(models.Model):
     twitter_id = models.PositiveIntegerField()
     
     def __unicode__(self):
-        return u'%s: %s' % (self.user, self.twitter_id)
+        return u'%s: %s' % (self.user, self.twitter_id) 
     
     def authenticate(self):
         return authenticate(twitter_id=self.twitter_id)
