@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     # url(r'^audigram/', include('audigram.foo.urls')),
     url(r'^audi/', include('audigram.audi.urlconfig')),
     url(r'^account/', include('audigram.account.urlconfig')),
+	url(r'^social/', include('audigram.social.urlconfig')),
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 

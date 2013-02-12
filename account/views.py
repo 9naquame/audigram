@@ -21,7 +21,6 @@ class SignUpForm(forms.Form):
         password = forms.CharField(widget=forms.PasswordInput,max_length=8,label='Password')
         cpassword = forms.CharField(widget=forms.PasswordInput,max_length=8,label='Confirmation Password')
 
-
 @csrf_exempt
 def sign_up_view(request):
         audi_list = Audi.objects.all()[:3]
