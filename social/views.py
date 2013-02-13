@@ -25,3 +25,58 @@ def get_next(request):
         return request.POST.get('next')
     else:
         return HttpResponse("Error")#return getattr(settings, 'LOGIN_REDIRECT_URL', '/')
+
+def setup(request, template='social/setup.html',
+    form_class=UserForm, extra_context=dict()):
+    """
+    Setup view to create a username & set email address after authentication
+    """
+    try:
+        social_user = request.session['social_user']
+        social_profile = request.session['social_profile']
+    except KeyError:
+        return render_to_response(
+            template, dict(error=True), context_instance=RequestContext(request))
+
+    if not GENERATE_USERNAME:
+        # User can pick own username
+        if not request.method == "POST":
+            form = form_class(social_user, social_profile)
+        else:
+            form = form_class(social_user, social_profile, request.POST)
+            
+            if form.is_valid():
+                form.save(request=request)
+                user = form.profile.authenticate()
+                login(request, user)
+
+                del request.session['social_user']
+                del request.session['social_profile']
+
+                return HttpResponseRedirect(_get_next(request))
+
+        extra_context.update(dict(form=form))
+
+        return render_to_response(template, extra_context,
+            context_instance=RequestContext(request))
+        
+    else:
+        # Generate user and profile
+        social_user.username = str(uuid.uuid4())[:30]
+        social_user.save()
+
+        social_profile.user = social_user
+        social_profile.save()
+
+        # Authenticate and login
+        user = social_profile.authenticate()
+        login(request, user)
+
+        # Clear & Redirect
+        del request.session['social_user']
+        del request.session['social_profile']
+        return HttpResponseRedirect(_get_next(request))
+
+if has_csrf:
+    setup = csrf_protect(setup)
+
