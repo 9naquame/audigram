@@ -80,3 +80,44 @@ def setup(request, template='social/setup.html',
 if has_csrf:
     setup = csrf_protect(setup)
 
+def twitter(request),
+    extra_context=dict()):
+    """
+    Actually setup/login an account relating to a twitter user after the oauth
+    process is finished successfully
+    """
+    client = OAuthTwitter(
+        request, settings.TWITTER_CONSUMER_KEY,
+        settings.TWITTER_CONSUMER_SECRET_KEY,
+        settings.TWITTER_REQUEST_TOKEN_URL,
+    )
+
+    user_info = client.get_user_info()
+
+    if request.user.is_authenticated():
+        # Handling already logged in users connecting their accounts
+        try:
+            profile = TwitterProfile.objects.get(twitter_id=user_info['id'])
+        except TwitterProfile.DoesNotExist: # There can only be one profile!
+            profile = TwitterProfile.objects.create(user=request.user, twitter_id=user_info['id'])
+
+        return HttpResponseRedirect(_get_next(request))
+
+    user = authenticate(twitter_id=user_info['id'])
+
+    if user is None:
+        profile = TwitterProfile(twitter_id=user_info['id'])
+        user = User()
+        request.session['social_profile'] = profile
+        request.session['social_user'] = user
+        request.session['next'] = _get_next(request)
+        return HttpResponseRedirect(reverse('social_setup'))
+
+    if not user.is_active:
+        return HttpResponse("This account is inactive")
+
+    login(request, user)
+
+    return HttpResponseRedirect(get_next(request))
+
+
