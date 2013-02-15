@@ -46,3 +46,7 @@ class OpenIDNonce(models.Model):
 
     def __unicode__(self):
         return u'OpenID Nonce for %s' % self.server_url
+
+admin.site.register([TwitterProfile, OpenIDProfile, OpenIDStore, OpenIDNonce])
+
+
