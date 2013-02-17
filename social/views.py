@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
 from django.utils.translation import gettext as _
 from django.http import HttpResponseRedirect, HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout as auth_logout
@@ -11,6 +12,12 @@ from django.contrib.sites.models import Site
 
 from social.form import UserForm
 from social.models import TwitterProfile
+
+try:
+    from django.views.decorators.csrf import csrf_protect
+    has_csrf = True
+except ImportError:
+    has_csrf = False
 
 GENERATE_USERNAME = bool(getattr(settings, 'SOCIAL_GENERATE_USERNAME', False))
 
@@ -26,8 +33,7 @@ def get_next(request):
     else:
         return HttpResponse("Error")#return getattr(settings, 'LOGIN_REDIRECT_URL', '/')
 
-def setup(request, template='social/setup.html',
-    form_class=UserForm, extra_context=dict()):
+def setup(request, template='social/setup.html',form_class=UserForm, extra_context=dict()):
     """
     Setup view to create a username & set email address after authentication
     """
@@ -53,7 +59,7 @@ def setup(request, template='social/setup.html',
                 del request.session['social_user']
                 del request.session['social_profile']
 
-                return HttpResponseRedirect(_get_next(request))
+                return HttpResponseRedirect(get_next(request))
 
         extra_context.update(dict(form=form))
 
@@ -75,13 +81,12 @@ def setup(request, template='social/setup.html',
         # Clear & Redirect
         del request.session['social_user']
         del request.session['social_profile']
-        return HttpResponseRedirect(_get_next(request))
+        return HttpResponseRedirect(get_next(request))
 
 if has_csrf:
     setup = csrf_protect(setup)
 
-def twitter(request),
-    extra_context=dict()):
+def twitter(request):
     """
     Actually setup/login an account relating to a twitter user after the oauth
     process is finished successfully
@@ -101,7 +106,7 @@ def twitter(request),
         except TwitterProfile.DoesNotExist: # There can only be one profile!
             profile = TwitterProfile.objects.create(user=request.user, twitter_id=user_info['id'])
 
-        return HttpResponseRedirect(_get_next(request))
+        return HttpResponseRedirect(get_next(request))
 
     user = authenticate(twitter_id=user_info['id'])
 
@@ -110,7 +115,7 @@ def twitter(request),
         user = User()
         request.session['social_profile'] = profile
         request.session['social_user'] = user
-        request.session['next'] = _get_next(request)
+        request.session['next'] = get_next(request)
         return HttpResponseRedirect(reverse('social_setup'))
 
     if not user.is_active:

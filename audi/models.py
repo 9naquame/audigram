@@ -1,8 +1,6 @@
 from django.db import models
 from django.contrib import admin
 
-# Create your models here.
-
 class Audi(models.Model):
     title = models.CharField(max_length=60)
     audio_file = models.FileField(upload_to = u'audi_files/', max_length=200)
