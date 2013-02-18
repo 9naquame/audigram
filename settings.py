@@ -152,3 +152,13 @@ LOGGING = {
         },
     }
 }
+
+TWITTER_CONSUMER_KEY = VaMHOyWXkeeMdt5dTJeQBQ
+TWITTER_CONSUMER_SECRET_KEY = ii1FXUDebjxamXXBtw9tdzygOdOUlXvCEG9OVmnzM
+
+consumer = oauth.Consumer(TWITTER_CONSUMER_KEY,TWITTER_CONSUMER_SECRET_KEY)
+client = oauth.Client(consumer)
+
+TWITTER_REQUEST_TOKEN_URL = https://api.twitter.com/oauth/request_token
+TWITTER_ACCESS_TOKEN_URL = https://api.twitter.com/oauth/access_token
+TWITTER_AUTHORIZATION_URL = https://api.twitter.com/oauth/authorize
