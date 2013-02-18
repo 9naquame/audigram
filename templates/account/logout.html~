@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+	{%block login%}
+		<hr>
+			You successfully logged out. <br />
+			<a href='/account/login'><button>Login</button></a> or <a href='/account/signup'><button>Sign Up</button></a>
+		<hr>
+		<a href='/blog/searchpage'><button>Search</button></a><br/>
+	{% endblock %}

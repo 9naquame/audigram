@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+	{%block content %}
+		<hr>
+			<a href='/account/login'><button>Login</button></a> 
+		<hr>
+		<form action="." method="post">
+			{{ form.as_p }}
+			<input type="submit" name="Submit" />
+			<input type='reset' name='Reset'>
+		</form>
+		<hr>
+		<a href='/blog/searchpage'><button>Search</button></a><br/>
+	{% endblock %}

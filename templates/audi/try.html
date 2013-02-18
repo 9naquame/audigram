@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+	{%block content %}
+		<form action="." method="post">
+			{% if form.error_dict %}
+				<p class="error">Please correct the errors below.</p>
+			{% endif %}
+
+			{{ form.as_p }}
+			<input type='submit' name='Submit'>
+			<input type='reset' name='reset'>	
+		</form>
+
+	{% endblock %}
