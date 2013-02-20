@@ -33,16 +33,13 @@ def get_next(request):
     else:
         return HttpResponse("Error")#return getattr(settings, 'LOGIN_REDIRECT_URL', '/')
 
+#Setup view to create a username & set email address after authentication
 def setup(request, template='social/setup.html',form_class=UserForm, extra_context=dict()):
-    """
-    Setup view to create a username & set email address after authentication
-    """
     try:
         social_user = request.session['social_user']
         social_profile = request.session['social_profile']
     except KeyError:
-        return render_to_response(
-            template, dict(error=True), context_instance=RequestContext(request))
+        return render_to_response(template, dict(error=True), context_instance=RequestContext(request))
 
     if not GENERATE_USERNAME:
         # User can pick own username
