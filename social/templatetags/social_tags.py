@@ -6,10 +6,6 @@ register = template.Library()
 
 @register.tag
 def social_csrf_token(parser, token):
-    """
-    Wrapper around the ``{% csrf_token %}`` template tag to make socialregistration
-    work with both Django v1.2 and Django < v1.2
-    """
     return CsrfNode()
     
 class CsrfNode(template.Node):
@@ -23,10 +19,6 @@ class CsrfNode(template.Node):
 
 @register.tag
 def open_id_errors(parser, token):
-    """
-    Retrieve OpenID errors and the provider that caused them from session for display to the user.
-    """
-
     # This version uses a regular expression to parse tag contents.
     try:
         # Splitting by None == splitting by spaces.

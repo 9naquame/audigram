@@ -1,3 +1,5 @@
+import uuid
+
 from django.conf import settings
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
@@ -11,7 +13,9 @@ from django.contrib.auth import login, authenticate, logout as auth_logout
 from django.contrib.sites.models import Site
 
 from social.form import UserForm
-from social.models import TwitterProfile
+from social.models import TwitterProfile, OpenIDProfile
+
+from social.utils import (OAuthClient, OAuthTwitter, OpenID, _https, DiscoveryFailure)
 
 try:
     from django.views.decorators.csrf import csrf_protect
