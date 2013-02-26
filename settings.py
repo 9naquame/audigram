@@ -153,9 +153,56 @@ LOGGING = {
     }
 }
 
-TWITTER_CONSUMER_KEY = "VaMHOyWXkeeMdt5dTJeQBQ"
-TWITTER_CONSUMER_SECRET_KEY = "ii1FXUDebjxamXXBtw9tdzygOdOUlXvCEG9OVmnzM"
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    #'social.auth.FacebookAuth',
+    'social.auth.TwitterAuth',
+    #'social.auth.LinkedInAuth',
+    'social.auth.OpenIDAuth',
+)
 
-TWITTER_REQUEST_TOKEN_URL = "https://api.twitter.com/oauth/request_token"
-TWITTER_ACCESS_TOKEN_URL = "https://api.twitter.com/oauth/access_token"
+MIDDLEWARE_CLASSES = (
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    #'social.middleware.FacebookMiddleware',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.contrib.messages.context_processors.messages",
+    "django.core.context_processors.request",
+)
+
+# Add your Facebook API keys here
+FACEBOOK_APP_ID = ''
+FACEBOOK_API_KEY = ''
+FACEBOOK_SECRET_KEY = ''
+FACEBOOK_REQUEST_PERMISSIONS = 'email,user_about_me'
+
+# Add your Twitter API keys here
+TWITTER_CONSUMER_KEY = 'VaMHOyWXkeeMdt5dTJeQBQ'
+TWITTER_CONSUMER_SECRET_KEY = 'ii1FXUDebjxamXXBtw9tdzygOdOUlXvCEG9OVmnzM'
+TWITTER_REQUEST_TOKEN_URL = 'https://api.twitter.com/oauth/request_token'
+TWITTER_ACCESS_TOKEN_URL = 'https://api.twitter.com/oauth/access_token'
+#TWITTER_AUTHORIZATION_URL = 'https://api.twitter.com/oauth/authenticate'
 TWITTER_AUTHORIZATION_URL = "https://api.twitter.com/oauth/authorize"
+
+# Add your LinkedIn API keys here
+LINKEDIN_CONSUMER_KEY = ''
+LINKEDIN_CONSUMER_SECRET_KEY = ''
+LINKEDIN_REQUEST_TOKEN_URL = 'https://api.linkedin.com/uas/oauth/requestToken'
+LINKEDIN_ACCESS_TOKEN_URL = 'https://api.linkedin.com/uas/oauth/accessToken'
+LINKEDIN_AUTHORIZATION_URL = 'https://www.linkedin.com/uas/oauth/authenticate'
+
+
+SOCIALREGISTRATION_USE_HTTPS = False
+SOCIALREGISTRATION_GENERATE_USERNAME = False
+
+LOGIN_REDIRECT_URL = '/'

@@ -271,9 +271,10 @@ class OAuth(object):
         """
         Get the saved access token for private resources from the session.
         """
-        print self.request.session['oauth_%s_access_token' % get_token_prefix(self.request_token_url)]
+        print self.request.session
+        #print self.request.session['oauth_%s_access_token' % get_token_prefix(self.request_token_url)]
         try:
-            return self.request.session['oauth_%s_access_token' % get_token_prefix(self.request_token_url)]
+            return self.request.session.session_key
         except KeyError:
             raise OAuthError(
                 _('No access token saved for "%s".') % get_token_prefix(self.request_token_url))
