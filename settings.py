@@ -201,7 +201,6 @@ LINKEDIN_REQUEST_TOKEN_URL = 'https://api.linkedin.com/uas/oauth/requestToken'
 LINKEDIN_ACCESS_TOKEN_URL = 'https://api.linkedin.com/uas/oauth/accessToken'
 LINKEDIN_AUTHORIZATION_URL = 'https://www.linkedin.com/uas/oauth/authenticate'
 
-
 SOCIALREGISTRATION_USE_HTTPS = False
 SOCIALREGISTRATION_GENERATE_USERNAME = False
 
